@@ -1,0 +1,44 @@
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<style>
+    html, body {
+       height: 100%;
+    }
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .text-red {
+        color: red;
+    }
+    .text-green {
+        color: green;
+    }
+</style>
+<div id="app">
+
+    <button
+            v-bind:class="buttonClasses"
+            v-on:click="toggle"
+    >
+        Click me
+    </button>
+</div>
+
+<script>
+    const { createApp, ref } = Vue
+
+    createApp({
+        setup() {
+            const buttonClasses = ref('text-green');
+            return {
+                buttonClasses: buttonClasses
+            }
+        },
+        methods: {
+            toggle() {
+                this.buttonClasses = this.buttonClasses === 'text-green' ? 'text-red' : 'text-green'
+            }
+        }
+    }).mount('#app')
+</script>
