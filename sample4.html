@@ -1,0 +1,16 @@
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<div id="app">
+    <app-button>Submit</app-button>
+</div>
+
+<script type="module">
+    const { createApp, ref } = Vue
+    import AppButton from './js/components/AppButton.js';
+    let app = {
+        components: {
+            'app-button': AppButton,
+            'assignment-list':{}
+        }
+    };
+    createApp(app).mount('#app');
+</script>
