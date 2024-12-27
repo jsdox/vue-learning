@@ -4,9 +4,9 @@ export default {
     components: { AssignmentList },
     template:`
         <div>
-            <assignment-list :assignments="filters.inProgressAssignments" title="In Progress"/></assignment-list>
-            <assignment-list :assignments="filters.completedAssignments" title="Completed"/></assignment-list>
-            <form @submit.prevent="addAssignment()">
+            <assignment-list :assignments="filters.inProgressAssignments" title="In Progress"/>
+            <assignment-list :assignments="filters.completedAssignments" title="Completed"/>
+            <form @submit.prevent="addAssignment">
                 <input v-model="newAssignment" placeholder="Add new assignment"/>
                 <button type="submit">Add</button>
             </form> 
@@ -20,7 +20,8 @@ export default {
         ])
         const newAssignment = ''
         return {
-            assignments
+            assignments,
+            newAssignment
         }
     },
     computed: {
@@ -30,6 +31,7 @@ export default {
         // inProgressAssignments() {
         //     return this.assignments.filter(a => !a.completed);
         // },
+
         filters() {
             return {
                 completedAssignments: this.assignments.filter(a => a.completed),
@@ -40,12 +42,14 @@ export default {
     },
     methods: {
         addAssignment() {
-            this.assignments.push({
-                id: this.assignments.length + 1,
-                name: this.newAssignment,
-                completed: false
-            });
-            this.newAssignment = '';
+            if (this.newAssignment && this.newAssignment.trim() !== '') {
+                this.assignments.push({
+                    id: this.assignments.length + 1,
+                    name: this.newAssignment,
+                    completed: false
+                });
+                this.newAssignment = '';
+            }
         }
     }
 }

@@ -15,6 +15,6 @@ export default {
     `,
 
     props:{
-        assignment: Array,
+        assignment: Object,
     }
 }
