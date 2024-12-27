@@ -1,10 +1,16 @@
 const { ref } = Vue;
 import AssignmentList from "./AssignmentList.js";
-export default{
+export default {
     components: { AssignmentList },
     template:`
-        <assignment-list :assignments="filters.inProgressAssignments" title="In Progress"/></assignment-list>
-        <assignment-list :assignments="filters.completedAssignments" title="Completed"/></assignment-list>
+        <div>
+            <assignment-list :assignments="filters.inProgressAssignments" title="In Progress"/></assignment-list>
+            <assignment-list :assignments="filters.completedAssignments" title="Completed"/></assignment-list>
+            <form @submit.prevent="addAssignment()">
+                <input v-model="newAssignment" placeholder="Add new assignment"/>
+                <button type="submit">Add</button>
+            </form> 
+        </div>   
     `,
     setup() {
         const assignments = ref([
@@ -12,6 +18,7 @@ export default{
             {id:2, name: 'Read chapter 4', completed: false },
             {id:3, name: 'Turn in homework', completed: false }
         ])
+        const newAssignment = ''
         return {
             assignments
         }
@@ -28,6 +35,17 @@ export default{
                 completedAssignments: this.assignments.filter(a => a.completed),
                 inProgressAssignments: this.assignments.filter(a => !a.completed)
             }
+        },
+
+    },
+    methods: {
+        addAssignment() {
+            this.assignments.push({
+                id: this.assignments.length + 1,
+                name: this.newAssignment,
+                completed: false
+            });
+            this.newAssignment = '';
         }
     }
 }
