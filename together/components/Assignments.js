@@ -7,9 +7,11 @@ export default {
             <assignment-list :assignments="filters.inProgressAssignments" title="In Progress"/>
             <assignment-list :assignments="filters.completedAssignments" title="Completed"/>
             <form @submit.prevent="addAssignment">
-                <input v-model="newAssignment" placeholder="Add new assignment"/>
+                <input v-model="newAssignment" placeholder="Add new assignment" :keyup.prevent="keyHandler" @focus="focus"/>
                 <button type="submit">Add</button>
             </form> 
+            <p v-if="validateNewAssignment" class="error">{{ validateNewAssignment }}</p>
+            
         </div>   
     `,
     setup() {
@@ -19,9 +21,11 @@ export default {
             {id:3, name: 'Turn in homework', completed: false }
         ])
         const newAssignment = ''
+        const validateNewAssignment = ref('')
         return {
             assignments,
-            newAssignment
+            newAssignment,
+            validateNewAssignment,
         }
     },
     computed: {
@@ -49,7 +53,19 @@ export default {
                     completed: false
                 });
                 this.newAssignment = '';
+                this.validateNewAssignment = ''; // Clear the error message
+            } else {
+                this.validateNewAssignment = 'Please enter a valid assignment name';
             }
+        },
+        keyHandler(event) {
+            if (event.key === 'Enter') {
+                this.validateNewAssignment = ''; // Clear the error message
+                this.addAssignment();
+            }
+        },
+        focus() {
+            this.validateNewAssignment = ''; // Clear the error message
         }
     }
 }
