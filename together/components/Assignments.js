@@ -1,16 +1,18 @@
 const { ref } = Vue;
 import AssignmentList from "./AssignmentList.js";
+import AssignmentCreate from "./AssignmentCreate.js";
 export default {
-    components: { AssignmentList },
+    components: { AssignmentList, AssignmentCreate },
     template:`
         <div>
             <assignment-list :assignments="filters.inProgressAssignments" title="In Progress"/>
             <assignment-list :assignments="filters.completedAssignments" title="Completed"/>
-            <form @submit.prevent="addAssignment">
-                <input v-model="newAssignment" placeholder="Add new assignment" :keyup.prevent="keyHandler" @focus="focus"/>
-                <button type="submit">Add</button>
-            </form> 
-            <p v-if="validateNewAssignment" class="error">{{ validateNewAssignment }}</p>
+            <assignment-create @add="add"/>
+<!--            <form @submit.prevent="addAssignment">-->
+<!--                <input v-model="newAssignment" placeholder="Add new assignment" :keyup.prevent="keyHandler" @focus="focus"/>-->
+<!--                <button type="submit">Add</button>-->
+<!--            </form> -->
+<!--            <p v-if="validateNewAssignment" class="error">{{ validateNewAssignment }}</p>-->
             
         </div>   
     `,
@@ -58,14 +60,26 @@ export default {
                 this.validateNewAssignment = 'Please enter a valid assignment name';
             }
         },
-        keyHandler(event) {
-            if (event.key === 'Enter') {
-                this.validateNewAssignment = ''; // Clear the error message
-                this.addAssignment();
+        add(name) {
+            if (name && name.trim() !== '') {
+                this.assignments.push({
+                    id: this.assignments.length + 1,
+                    name:name,
+                    completed: false
+                });
+                // this.newAssignment = '';
+                // this.validateNewAssignment = ''; // Clear the error message
             }
         },
-        focus() {
-            this.validateNewAssignment = ''; // Clear the error message
-        }
+
+        // keyHandler(event) {
+        //     if (event.key === 'Enter') {
+        //         this.validateNewAssignment = ''; // Clear the error message
+        //         this.addAssignment();
+        //     }
+        // },
+        // focus() {
+        //     this.validateNewAssignment = ''; // Clear the error message
+        // }
     }
 }
