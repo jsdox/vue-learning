@@ -1,1 +1,1 @@
-npxrun command: npx serve
+run command: npx serve
