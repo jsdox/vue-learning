@@ -16,7 +16,6 @@
     }
 </style>
 <div id="app">
-
     <button
             v-bind:class="buttonClasses"
             v-on:click="toggle"
@@ -27,7 +26,6 @@
 
 <script>
     const { createApp, ref } = Vue
-
     createApp({
         setup() {
             const buttonClasses = ref('text-green');
