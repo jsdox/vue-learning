@@ -5,4 +5,5 @@ export default {
     },
     template:`<Assignments />`,
     // template:`<assignments><assignments />`,
+    
 }
