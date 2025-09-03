@@ -24,12 +24,12 @@ export default
             default: 'no'
         }
     },
-    // data() {
-    //     return {
-    //         processing: true
-    //     }
-    // },
-    // mounted() {
-    //     alert('Button mounted');
-    // },
+    data() {
+        return {
+            processing: true
+        }
+    },
+    mounted() {
+        alert('Button mounted');
+    },
 }
